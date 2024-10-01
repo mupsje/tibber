@@ -1,6 +1,7 @@
 services:
   tibber_energy_monitor:
     build: .
+    image: poepchen/tibber_energy_monitor:latest
     container_name: tibber_energy_monitor
     environment:
       - TIBBER_TOKEN=${TIBBER_TOKEN}
