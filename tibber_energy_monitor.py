@@ -1,12 +1,12 @@
 import tibber
 import time
 import paho.mqtt.client as mqtt
-from dotenv import load_dotenv
 import os
 import json
+import logging
 
-# Laad omgevingsvariabelen uit het .env bestand
-load_dotenv()
+# Configureer logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Verkrijg de configuraties uit de omgevingsvariabelen
 tibber_token = os.getenv("TIBBER_TOKEN")
@@ -14,12 +14,8 @@ mqtt_broker = os.getenv("MQTT_BROKER")
 mqtt_username = os.getenv("MQTT_USERNAME")
 mqtt_password = os.getenv("MQTT_PASSWORD")
 
-# Tibber-account instellen
-account = tibber.Account(tibber_token)
-home = account.homes[1]
-
-# MQTT-client instellen met specifieke Callback API versie
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
+# MQTT-client instellen
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.username_pw_set(mqtt_username, mqtt_password)
 
 # Verbinden met de MQTT-broker
@@ -33,6 +29,7 @@ def publish_config(sensor_name, unit, icon):
         "name": f"Tibber {sensor_name.capitalize()} Prijs",
         "state_topic": f"tibber/{sensor_name}",
         "unit_of_measurement": unit,
+        "value_template": "{{ value | float }}",
         "icon": icon,
         "unique_id": f"tibber_{sensor_name}_price",
         "device": {
@@ -45,40 +42,45 @@ def publish_config(sensor_name, unit, icon):
         "state_class": "measurement"
     }
     client.publish(config_topic, json.dumps(config), retain=True)
+    logging.info(f"Published config for {sensor_name}")
 
 # Publiceer configuraties voor discovery
 publish_config("energie", "EUR/kWh", "mdi:flash")
 publish_config("belasting", "EUR/kWh", "mdi:cash")
 publish_config("totaal", "EUR/kWh", "mdi:cash-multiple")
 
-while True:
-    current_subscription = home.current_subscription
-    
-    if current_subscription and current_subscription.price_info:
-        current_price = current_subscription.price_info.current
+def publish_price(topic, value):
+    formatted_value = f"{value:.5f}"
+    client.publish(topic, formatted_value, retain=True)
+    logging.info(f"Published {topic}: {formatted_value}")
+
+def fetch_and_publish_prices():
+    try:
+        # Maak een nieuwe Tibber-verbinding voor elke update
+        account = tibber.Account(tibber_token)
+        home = account.homes[1]
+        
+        current_price = home.current_subscription.price_info.current
         
         if current_price:
             subscription_energy = current_price.energy
             subscription_total = current_price.total
             subscription_tax = current_price.tax
 
-            print(f"Energieprijs: {subscription_energy}")
-            print(f"Belasting: {subscription_tax}")
-            print(f"Totaal: {subscription_total}")
-            print()
+            logging.info(f"Energieprijs: {subscription_energy}")
+            logging.info(f"Belasting: {subscription_tax}")
+            logging.info(f"Totaal: {subscription_total}")
 
             # Publiceer de waarden naar de MQTT-broker
-            client.publish("tibber/energie", subscription_energy)
-            client.publish("tibber/belasting", subscription_tax)
-            client.publish("tibber/totaal", subscription_total)
+            publish_price("tibber/energie", subscription_energy)
+            publish_price("tibber/belasting", subscription_tax)
+            publish_price("tibber/totaal", subscription_total)
         else:
-            print("Geen huidige prijsinformatie beschikbaar.")
-    else:
-        print("Geen huidige abonnementsinformatie of prijsinformatie beschikbaar.")
-    
-    # Wacht 5 minuten (300 seconden)
-    time.sleep(300)
+            logging.warning("Geen huidige prijsinformatie beschikbaar.")
+    except Exception as e:
+        logging.error(f"Er is een fout opgetreden bij het ophalen of publiceren van prijzen: {e}")
 
-# Stop de MQTT-loop (optioneel, als je dit zou willen afsluiten)
-# client.loop_stop()
-# client.disconnect()
+# Hoofdlus
+while True:
+    fetch_and_publish_prices()
+    time.sleep(300)  # Wacht 5 minuten
