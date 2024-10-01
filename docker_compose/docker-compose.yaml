@@ -1,0 +1,10 @@
+services:
+  tibber_energy_monitor:
+    build: .
+    container_name: tibber_energy_monitor
+    environment:
+      - TIBBER_TOKEN=${TIBBER_TOKEN}
+      - MQTT_BROKER=${MQTT_BROKER}
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+    restart: unless-stopped
