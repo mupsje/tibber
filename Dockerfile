@@ -13,9 +13,8 @@ COPY requirements.txt .
 # Installeer de Python-afhankelijkheden
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Kopieer het Python-script en .env bestand naar de container
-COPY getdata_tibber.py .
-COPY .env .
+# Kopieer de applicatiebestanden naar de container
+COPY . .
 
 # Stel het commando in om het script uit te voeren
-CMD ["python", "getdata_tibber.py"]
+CMD ["python", "tibber_energy_monitor.py"]
