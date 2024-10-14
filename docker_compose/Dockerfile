@@ -1,6 +1,12 @@
 # Use an Alpine image with Python 3.12.5
 FROM python:3.12.5-alpine
 
+# Install tzdata for time zone configuration
+RUN apk add --no-cache tzdata
+
+# Set the time zone
+ENV TZ=Europe/Amsterdam
+
 # Set the working directory in the container
 WORKDIR /app
 
