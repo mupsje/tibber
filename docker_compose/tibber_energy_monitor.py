@@ -24,7 +24,6 @@ client_id = f'tibber-api-{random.randint(0, 1000)}'
 client = mqtt.Client(client_id=client_id, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
 client.username_pw_set(mqtt_username, mqtt_password)
 
-
 # Verbinden met de MQTT-broker
 client.connect(mqtt_broker, 1883, 60)
 client.loop_start()
@@ -55,7 +54,8 @@ publish_config("energie", "EUR/kWh", "mdi:flash")
 publish_config("belasting", "EUR/kWh", "mdi:cash")
 publish_config("totaal", "EUR/kWh", "mdi:cash-multiple")
 
-def publish_price(topic, value):
+def publish_price(base_topic, sensor_name, value):
+    topic = f"{base_topic}/{sensor_name}"
     client.publish(topic, f"{value:.5f}", retain=True)
 
 while True:
@@ -76,9 +76,10 @@ while True:
                 print()
 
                 # Publiceer de waarden naar de MQTT-broker
-                publish_price("tibber/energie", subscription_energy)
-                publish_price("tibber/belasting", subscription_tax)
-                publish_price("tibber/totaal", subscription_total)
+                base_topic = "tibber"
+                publish_price(base_topic, "energie", subscription_energy)
+                publish_price(base_topic, "belasting", subscription_tax)
+                publish_price(base_topic, "totaal", subscription_total)
             else:
                 print("Geen huidige prijsinformatie beschikbaar.")
         else:
