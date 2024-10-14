@@ -3,6 +3,11 @@ import time
 import paho.mqtt.client as mqtt
 import os
 import json
+import random
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Verkrijg de configuraties uit de omgevingsvariabelen
 tibber_token = os.getenv("TIBBER_TOKEN")
@@ -15,8 +20,10 @@ account = tibber.Account(tibber_token)
 home = account.homes[1]
 
 # MQTT-client instellen
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+client_id = f'tibber-api-{random.randint(0, 1000)}'
+client = mqtt.Client(client_id=client_id, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
 client.username_pw_set(mqtt_username, mqtt_password)
+
 
 # Verbinden met de MQTT-broker
 client.connect(mqtt_broker, 1883, 60)
