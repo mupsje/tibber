@@ -1,20 +1,20 @@
-# Gebruik een Alpine-image met Python 3.12.5
+# Use an Alpine image with Python 3.12.5
 FROM python:3.12.5-alpine
 
-# Zet de werkdirectory in de container
+# Set the working directory in the container
 WORKDIR /app
 
-# Installeer de benodigde systeembibliotheken
+# Install necessary system libraries
 RUN apk add --no-cache gcc musl-dev libffi-dev
 
-# Kopieer de requirements.txt naar de container
+# Copy the requirements.txt to the container
 COPY requirements.txt .
 
-# Installeer de Python-afhankelijkheden
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Kopieer de applicatiebestanden naar de container
+# Copy the application files to the container
 COPY . .
 
-# Stel het commando in om het script uit te voeren
+# Set the command to run the script
 CMD ["python", "tibber_energy_monitor.py"]
