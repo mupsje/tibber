@@ -29,3 +29,11 @@ When you're done working in the virtual environment, you can deactivate it by si
 deactivate
 ```
 
+##################################################################################################################
+
+```
+python -m pip install --upgrade pip setuptools
+
+```
+
+
