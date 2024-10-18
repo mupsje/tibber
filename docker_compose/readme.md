@@ -10,6 +10,22 @@ docker-compose pull
 docker-compose up -d
 ```
 
+reminder
+cd path/to/your_project
 
-
+```
+python -m venv env
+```
+- Windows
+```
+.\env\Scripts\activate
+```
+- macOS/Linux
+```
+ source env/bin/activate
+```
+When you're done working in the virtual environment, you can deactivate it by simply running:
+```
+deactivate
+```
 
