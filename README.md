@@ -20,8 +20,10 @@
 </div>
 <br clear="left"/>
 # Tibber Energy Monitor
-
+<div align="center">
 ![image](https://github.com/user-attachments/assets/cebf20b4-8faf-49dc-af22-5037e43794dc)
+</div>
+
 
 ## 🔗 Quick Links
 
