@@ -44,7 +44,54 @@
 - [🙌 Acknowledgments](#-acknowledgments)
 
 ---
+### 📂 Project Index
+<details open>
+	<summary><b><code>TIBBER/</code></b></summary>
+	<details> <!-- __root__ Submodule -->
+		<summary><b>__root__</b></summary>
+		<blockquote>
+			<table>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/mqtt_client.py'>mqtt_client.py</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/tibber_energy_monitor.py'>tibber_energy_monitor.py</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/docker-compose.yaml'>docker-compose.yaml</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/dhclient.conf'>dhclient.conf</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/requirements.txt'>requirements.txt</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/Dockerfile'>Dockerfile</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			</table>
+		</blockquote>
+	</details>
+	<details> <!-- docker_compose Submodule -->
+		<summary><b>docker_compose</b></summary>
+		<blockquote>
+			<table>
+			<tr>
+				<td><b><a href='https://github.com/mupsje/tibber/blob/master/docker_compose/docker-compose.yaml'>docker-compose.yaml</a></b></td>
+				<td><code>❯ REPLACE-ME</code></td>
+			</tr>
+			</table>
+		</blockquote>
+	</details>
+</details>
 
+---
 Deze applicatie haalt real-time energieprijzen op van Tibber en publiceert ze naar Home Assistant via MQTT.
 Ik wil graag de kale prijs in Hassio hebben om de zonnepanelen uit te schakelen wanneer de prijs in de min is. (negatief)
 Nu zien wij enkel alleen de prijs inclusief belasting, en daar hebben we niks aan.
