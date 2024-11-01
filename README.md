@@ -67,7 +67,10 @@ Onderhoud 🛠️
   - Container herstarten: docker-compose restart
   - SSH verbinding: ssh root@[container-ip]
     
-Netwerk
+Netwerk 🌐
   - Container heeft een vast IP nodig
   - Configureer het netwerk in docker-compose.yml
   - Zorg dat de container toegang heeft tot internet en je MQTT broker
+
+Support 📫
+Bij vragen of problemen, open een issue in de GitHub repository.
