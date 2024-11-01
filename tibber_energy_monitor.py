@@ -19,10 +19,6 @@ mqtt_broker = os.getenv("MQTT_BROKER")
 mqtt_username = os.getenv("MQTT_USERNAME")
 mqtt_password = os.getenv("MQTT_PASSWORD")
 
-# Set up Tibber account once
-account = tibber.Account(tibber_token)
-home = account.homes[1]
-
 # Set up MQTT client
 client_id = f'tibber-api-{random.randint(0, 1000)}'
 client = mqtt.Client(client_id=client_id, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
@@ -32,7 +28,7 @@ client.username_pw_set(mqtt_username, mqtt_password)
 client.connect(mqtt_broker, 1883, 60)
 client.loop_start()
 
-# Home Assistant MQTT Discovery configuratie
+# Home Assistant MQTT Discovery configuration
 def publish_config(sensor_name, unit, icon):
     config_topic = f"homeassistant/sensor/tibber_{sensor_name}/config"
     config = {
@@ -54,22 +50,16 @@ def publish_config(sensor_name, unit, icon):
     client.publish(config_topic, json.dumps(config), retain=True)
     logging.info(f"Published config for {sensor_name}")
 
-# Publiceer configuraties voor discovery
+# Publish configurations for discovery
 publish_config("energie", "EUR/kWh", "mdi:flash")
 publish_config("belasting", "EUR/kWh", "mdi:cash")
 publish_config("totaal", "EUR/kWh", "mdi:cash-multiple")
 
-def publish_price(topic, value):
+def publish_price(base_topic, sensor_name, value):
     formatted_value = f"{value:.5f}"
+    topic = f"{base_topic}/{sensor_name}"
     client.publish(topic, formatted_value, retain=True)
     logging.info(f"Published {topic}: {formatted_value}")
-
-def validate_price(value):
-    if not isinstance(value, (int, float)):
-        raise ValueError(f"Invalid price value: {value}")
-    if value < 0:
-        raise ValueError(f"Negative price value: {value}")
-    return value
 
 def wait_until_next_5min_interval():
     now = datetime.now()
@@ -81,6 +71,10 @@ def wait_until_next_5min_interval():
 
 while True:
     try:
+        # Create new connection each time
+        account = tibber.Account(tibber_token)
+        home = account.homes[1]
+        
         current_subscription = home.current_subscription
         
         if current_subscription and current_subscription.price_info:
@@ -97,9 +91,9 @@ while True:
 
                 # Publish values to MQTT broker
                 base_topic = "tibber"
-                publish_price(f"{base_topic}/energie", subscription_energy)
-                publish_price(f"{base_topic}/belasting", subscription_tax)
-                publish_price(f"{base_topic}/totaal", subscription_total)
+                publish_price(base_topic, "energie", subscription_energy)
+                publish_price(base_topic, "belasting", subscription_tax)
+                publish_price(base_topic, "totaal", subscription_total)
             else:
                 logging.warning("Geen huidige prijsinformatie beschikbaar.")
         else:
