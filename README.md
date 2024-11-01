@@ -39,16 +39,35 @@ SSH_PASSWORD=ssh_wachtwoord
 docker-compose up -d
 ```
 
+##🔧Configuratie
 
+Tibber Token
+  - Log in op developer.tibber.com
+  - Genereer een nieuwe access token
+  - Plaats deze in het .env bestand
 
+MQTT
+  - Zorg dat je MQTT broker draait
+  - Vul de juiste MQTT gegevens in het .env bestand in
+  - De applicatie maakt automatisch de entities aan in Home Assistant
 
+SSH Toegang
+  - SSH toegang is mogelijk op poort 22
+  - Gebruik root als gebruikersnaam
+  - Wachtwoord is ingesteld via SSH_PASSWORD in .env
 
+Sensors in Home Assistant
+De volgende sensors worden automatisch aangemaakt:
+  - Tibber Energie Prijs (EUR/kWh)
+  - Tibber Belasting Prijs (EUR/kWh)
+  - Tibber Totaal Prijs (EUR/kWh)
 
-
-
-
-Tibber account with API token
-MQTT broker
-Home Assistant installation
-🔧 Installation
-Get your Tibber API token from developer.tibber.com
+Onderhoud
+  - Logs bekijken: docker-compose logs -f
+  - Container herstarten: docker-compose restart
+  - SSH verbinding: ssh root@[container-ip]
+    
+Netwerk
+  - Container heeft een vast IP nodig
+  - Configureer het netwerk in docker-compose.yml
+  - Zorg dat de container toegang heeft tot internet en je MQTT broker
