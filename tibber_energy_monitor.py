@@ -102,3 +102,5 @@ while True:
         logging.error(f"Er is een fout opgetreden: {e}")
     
     wait_until_next_5min_interval()
+# werkend
+
