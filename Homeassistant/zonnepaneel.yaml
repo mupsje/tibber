@@ -1,0 +1,49 @@
+# From  https://github.com/twrecked/hass-virtual 
+
+switch:
+  - platform: virtual
+    name: solar klep
+    persistent: False
+
+# Real switch 
+# https://nl.aliexpress.com/item/1005007094871690.html?spm=a2g0o.order_detail.order_detail_item.5.5e2e6d76UvYxA9&gatewayAdapt=glo2nld
+
+automation:
+  description: ""
+  mode: single
+  triggers:
+    - trigger: numeric_state
+      entity_id:
+        - sensor.tibber_energy_monitor_tibber_energie_prijs
+      below: "0"
+      id: negatief
+    - trigger: numeric_state
+      entity_id:
+        - sensor.tibber_energy_monitor_tibber_energie_prijs
+      id: positief
+      above: 0
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - negatief
+          sequence:
+            - action: switch.turn_off
+              metadata: {}
+              data: {}
+              target:
+                entity_id: switch.virtual_solar_klep
+        - conditions:
+            - condition: trigger
+              id:
+                - positief
+          sequence:
+            - action: switch.turn_on
+              target:
+                entity_id:
+                  - switch.virtual_solar_klep
+              data: {}
+
+
