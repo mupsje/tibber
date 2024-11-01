@@ -39,7 +39,7 @@ SSH_PASSWORD=ssh_wachtwoord
 docker-compose up -d
 ```
 
-##🔧Configuratie
+## Configuratie🔧
 
 Tibber Token
   - Log in op developer.tibber.com
