@@ -1,3 +1,26 @@
+<div align="left">
+    <img src="https://cdn-icons-png.flaticon.com/512/6295/6295417.png" width="40%" align="left" style="margin-right: 15px"/>
+    <div style="display: inline-block;">
+        <h2 style="display: inline-block; vertical-align: middle; margin-top: 0;">TIBBER</h2>
+        <p>
+	<em><code>❯ Deze applicatie haalt real-time energieprijzen op van Tibber en publiceert ze naar Home Assistant via MQTT.
+Ik wil graag de kale prijs in Hassio hebben om de zonnepanelen uit te schakelen wanneer de prijs in de min is. (negatief)
+Nu zien wij enkel alleen de prijs inclusief belasting, en daar hebben we niks aan.</code></em>
+</p>
+        <p>
+	<img src="https://img.shields.io/github/license/mupsje/tibber?style=flat-square&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+	<img src="https://img.shields.io/github/last-commit/mupsje/tibber?style=flat-square&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+	<img src="https://img.shields.io/github/languages/top/mupsje/tibber?style=flat-square&color=0080ff" alt="repo-top-language">
+	<img src="https://img.shields.io/github/languages/count/mupsje/tibber?style=flat-square&color=0080ff" alt="repo-language-count">
+</p>
+        <p>Built with the tools and technologies:</p>
+        <p>
+	<img src="https://img.shields.io/badge/Docker-2496ED.svg?style=flat-square&logo=Docker&logoColor=white" alt="Docker">
+	<img src="https://img.shields.io/badge/Python-3776AB.svg?style=flat-square&logo=Python&logoColor=white" alt="Python">
+</p>
+    </div>
+</div>
+<br clear="left"/>
 # Tibber Energy Monitor
 
 ![image](https://github.com/user-attachments/assets/cebf20b4-8faf-49dc-af22-5037e43794dc)
@@ -74,3 +97,5 @@ Netwerk 🌐
 
 Support 📫
 Bij vragen of problemen, open een issue in de GitHub repository.
+
+
