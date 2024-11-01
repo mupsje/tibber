@@ -3,7 +3,7 @@
     <div style="display: inline-block;">
         <h2 style="display: inline-block; vertical-align: middle; margin-top: 0;">TIBBER</h2>
         <p>
-	<em><code>❯ Applicatie haalt real-time energieprijzen op van Tibber en publiceert ze naar Home Assistant via MQTT.</code></em>
+	<em><code>Applicatie haalt real-time energieprijzen op van Tibber en publiceert ze naar Home Assistant via MQTT.</code></em>
 </p>
         <p>
 	<img src="https://img.shields.io/github/license/mupsje/tibber?style=flat-square&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
