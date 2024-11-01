@@ -1,5 +1,5 @@
 <div align="left">
-    <img src="C:\GIT\tibber\assets\Tibber_400x400.jpg" width="40%" align="left" style="margin-right: 15px"/>
+    <img src="assets\tibber-vector-logo.png" width="40%" align="left" style="margin-right: 15px"/>
     <div style="display: inline-block;">
         <h2 style="display: inline-block; vertical-align: middle; margin-top: 0;">TIBBER</h2>
         <p>
